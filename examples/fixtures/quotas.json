@@ -1,0 +1,24 @@
+{
+  "kind": "ResourceQuotaList",
+  "apiVersion": "v1",
+  "items": [
+    {
+      "kind": "ResourceQuota",
+      "apiVersion": "v1",
+      "metadata": { "name": "compute", "namespace": "team-a" },
+      "status": {
+        "hard": { "requests.cpu": "10", "requests.memory": "20Gi", "pods": "50" },
+        "used": { "requests.cpu": "4", "requests.memory": "17Gi", "pods": "48" }
+      }
+    },
+    {
+      "kind": "ResourceQuota",
+      "apiVersion": "v1",
+      "metadata": { "name": "objects", "namespace": "team-b" },
+      "status": {
+        "hard": { "configmaps": "20", "secrets": "20", "services": "10" },
+        "used": { "configmaps": "5", "secrets": "3", "services": "2" }
+      }
+    }
+  ]
+}
