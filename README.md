@@ -3,7 +3,7 @@
 [![CI](https://github.com/moveeeax/k8s-resourcequota-headroom/actions/workflows/ci.yml/badge.svg)](https://github.com/moveeeax/k8s-resourcequota-headroom/actions/workflows/ci.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/moveeeax/k8s-resourcequota-headroom)](https://goreportcard.com/report/github.com/moveeeax/k8s-resourcequota-headroom)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Go Version](https://img.shields.io/badge/go-1.22-00ADD8.svg)](go.mod)
+[![Go Version](https://img.shields.io/badge/go-1.26%20%7C%201.27-00ADD8.svg)](go.mod)
 
 A `ResourceQuota` does not warn you before it bites. The first sign you are out of quota is a Pod stuck `Pending` with a `forbidden: exceeded quota` error — often mid-deploy. `k8s-resourcequota-headroom` reads every ResourceQuota and tells you which namespaces are about to hit the wall, while you can still do something about it.
 
@@ -36,13 +36,16 @@ k8s-resourcequota-headroom scan -n team-a --warn 70 --critical 90 --output json
 k8s-resourcequota-headroom scan --all-namespaces --fail-on critical
 ```
 
-Example output:
+Example output (`scan --input examples/fixtures/quotas.json`):
 
 ```
 NAMESPACE  QUOTA    RESOURCE         USED  HARD  PERCENT  SEVERITY
 team-a     compute  pods             48    50    96.00%   CRITICAL
 team-a     compute  requests.cpu     4     10    40.00%   OK
 team-a     compute  requests.memory  17Gi  20Gi  85.00%   LOW HEADROOM
+team-b     objects  configmaps       5     20    25.00%   OK
+team-b     objects  secrets          3     20    15.00%   OK
+team-b     objects  services         2     10    20.00%   OK
 
 Summary: CRITICAL=1  LOW HEADROOM=1  OK=4
 ```
